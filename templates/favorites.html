@@ -7,19 +7,6 @@
         <h1 class="mt-5">Witaj w Bibliotece Filmów</h1>
         <p class="lead">Wszystkie filmy w jednym miejscu!</p>
     </div>
-
-    {% for list_type in list_of_types %}
-    <div class="col-md-3 col-sm-6 mb-4">
-        {% if list_type == current_list %}
-        <a href="{{ url_for('homepage', list_type=list_type) }}" class="btn btn-outline-info active" role="button" aria-pressed="true">{{list_type| capitalize()| replace("_", " ")}}</a>
-        {% else %}
-
-        <a href="{{ url_for('homepage', list_type=list_type) }}" class="btn btn-outline-info" disabled>{{list_type| replace("_", " ")| capitalize()}}</a>
-        {% endif %}
-        
-    </div>
-    {% endfor %}
-
     {% for movie in movies %}
     <div class="col-lg-3 col-md-6 mb-4">
         <div class="card h-100">

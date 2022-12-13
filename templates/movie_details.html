@@ -33,7 +33,7 @@
       <a href="#">
       <figure class="figure">
         {% if actor.profile_path %}
-          <img src="{{ tmdb_image_url(actor.profile_path, "w185") }}"  class="figure-img img-fluid rounded" alt="{{ actor.name }}">
+          <img src="{{ tmdb_image_url(actor.profile_path, 'w185') }}"  class="figure-img img-fluid rounded" alt="{{ actor.name }}">
         {% else %}
           <img src="{{url_for('static', filename='question-mark.jpg')}}" width="185" height="278" class="figure-img img-fluid rounded" alt="{{ actor.name }}">
         {% endif %}
