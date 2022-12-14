@@ -38,6 +38,7 @@ from unittest.mock import Mock
 ################################################################
 
 # def test_get_single_movie(monkeypatch):
+#     """test - sprawdza czy pobierar pojedynczy film"""
 #     mock_movie = 'Kiler'
 #     requests_mock = Mock()
 #     response = requests_mock.return_value
@@ -48,11 +49,11 @@ from unittest.mock import Mock
 #     assert movie == mock_movie
 
 
-# def test_get_single_movie_default_movieid(monkeypatch):
-#     movie_id = ""
-#     requests_mock = Mock()
-#     response = requests_mock.return_value
-#     response.json.return_value = 
+def test_default_movie_id():
+    default_movie_id = "messi10"
+    endpoint = f"https://api.themoviedb.org/3/movie/{default_movie_id}"
+    assert endpoint == "https://api.themoviedb.org/3/movie/messi10"
+
 
 
 # def test_get_single_movie_images(monkeypatch):
@@ -66,19 +67,17 @@ from unittest.mock import Mock
 #     assert images == mock_images
 
 
-# def test_get_single_movie_images_default_movieid():
 
+#działą!
+# def test_get_single_movie_cast(monkeypatch):
+#     mock_casts =   {'cast':['actor1', 'actor2']}
+#     requests_mock = Mock()
+#     response = requests_mock.return_value 
+#     response.json.return_value = mock_casts
+#     monkeypatch.setattr("tmdb_client.requests.get", requests_mock)
 
-def test_get_single_movie_cast(monkeypatch):
-    mock_casts = ['actor1', 'actor2']
-    requests_mock = Mock()
-    requests_mock.return_value = ['actor1', 'actor2']
-    response = requests_mock.return_value
-    response.json.return_value = mock_casts
-    monkeypatch.setattr("tmdb_client.requests.get", requests_mock)
-
-    casts = tmdb_client.get_single_movie_cast(1)
+#     casts = tmdb_client.get_single_movie_cast(1)
     
-    assert casts == mock_casts
-    print(casts)
+#     assert casts == mock_casts['cast']
+
     
