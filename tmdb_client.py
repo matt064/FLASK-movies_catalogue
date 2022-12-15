@@ -3,24 +3,22 @@ import random
 
 api_token = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1NTkxNjlmMjZjNDc1YTZiZDlhOWFjNDMyNjZkMGE5ZiIsInN1YiI6IjYzNzRhZDM4ZDdkY2QyMDA3ZjdjOTE3MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.oVKhhiF6Y-4c8GE9rm50J8_W0tTNQnF85_0yJffThsc"
 
+def call_tmdb_api(endpoint):
+    full_url = f"https://api.themoviedb.org/3/{endpoint}"
+    headers = {
+        "Authorization": f"Bearer {api_token}"
+    }
+    response = requests.get(full_url, headers=headers)
+    response.raise_for_status()
+    return response.json()
+
+
 def get_movies_list(list_type):
     #pobiera listy z filmami, w prypadku wpisania zlej listy zwraca liste popular
     try:
-        endpoint = f"https://api.themoviedb.org/3/movie/{list_type}"
-        headers = {
-        "Authorization": f"Bearer {api_token}"
-        }    
-        response = requests.get(endpoint, headers=headers)
-        response.raise_for_status() #dzieki temu operujemy na poprawnych danych
-        return response.json()
+        return call_tmdb_api(f"movie/{list_type}")
     except requests.exceptions.HTTPError:
-        endpoint = f"https://api.themoviedb.org/3/movie/popular"
-        headers = {
-        "Authorization": f"Bearer {api_token}"
-        }    
-        response = requests.get(endpoint, headers=headers)
-        response.raise_for_status() 
-        return response.json()
+        return call_tmdb_api(f"movie/popular")
 
 
 def get_poster_url(poster_path, size="w342"):
@@ -33,18 +31,12 @@ def get_movies(list_type, how_many):
     # pobiera wybrana ilosc filmow na strone glowna
     data = get_movies_list(list_type)
     random.shuffle(data['results'])
-
     return data['results'][:how_many]
 
 
 def get_single_movie(movie_id):
     # pobiera szczegoly danego filmu
-    endpoint = f"https://api.themoviedb.org/3/movie/{movie_id}"
-    headers = {
-        "Authorization": f"Bearer {api_token}"
-    }
-    response = requests.get(endpoint, headers=headers)
-    return response.json()
+    return call_tmdb_api(f"movie/{movie_id}")
 
 
 def get_single_movie_cast(movie_id):
@@ -59,12 +51,8 @@ def get_single_movie_cast(movie_id):
 
 def get_single_movie_images(movie_id):
     # pobiera dodatkowe zdjecia z filmow
-    endpoint = f"https://api.themoviedb.org/3/movie/{movie_id}/images"
-    headers = {
-        "Authorization": f"Bearer {api_token}"
-    }
-    response = requests.get(endpoint, headers=headers)
-    return response.json()
+    return call_tmdb_api(f"movie/{movie_id}/images")
+
 
 def search(search_query):
     #wyszukuje filmy
@@ -90,16 +78,4 @@ def get_airing_today():
     response = response.json()
     return response['results']
 
-
-
-# do wgladu danych
-data_movie = get_single_movie_cast(436270)
-
-print(data_movie)
-
-
-
-
-# for movie in data_movie['results']:
-#     print (movie)
 
