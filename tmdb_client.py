@@ -1,9 +1,13 @@
 import requests
 import random
 import os
+from dotenv import load_dotenv
 
-api_token = os.environ.get("TMDB_API_TOKEN", "")
 
+api_token = os.getenv('TMDB_API_TOKEN')
+
+def configure():
+    load_dotenv()
 
 def call_tmdb_api(endpoint):
     full_url = f"https://api.themoviedb.org/3/{endpoint}"
