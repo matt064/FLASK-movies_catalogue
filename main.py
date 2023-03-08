@@ -2,10 +2,13 @@ from flask import Flask, render_template, url_for, request, redirect, flash
 import tmdb_client
 import random
 import datetime
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = b'mateo11'
+app.secret_key = os.getenv('secret_key')
 
 #pusty zbior ulubionych filmow
 favorites = set()
@@ -28,7 +31,7 @@ def utility_processor():
 @app.route("/movie/<movie_id>/")
 def movie_details(movie_id):
     details = tmdb_client.get_single_movie(movie_id)
-    cast = tmdb_client.get_single_movie_cast(movie_id)
+    cast = tmdb_client.get_single_movie_cast(movie_id, how_many=12)
     images = tmdb_client.get_single_movie_images(movie_id)
     selected_backdrop = random.choice(images['backdrops'])
     return render_template("movie_details.html", movie = details, cast=cast, selected_backdrop=selected_backdrop)

@@ -3,11 +3,10 @@ import random
 import os
 from dotenv import load_dotenv
 
+load_dotenv()
 
 api_token = os.getenv('TMDB_API_TOKEN')
 
-def configure():
-    load_dotenv()
 
 def call_tmdb_api(endpoint):
     full_url = f"https://api.themoviedb.org/3/{endpoint}"
@@ -45,14 +44,14 @@ def get_single_movie(movie_id):
     return call_tmdb_api(f"movie/{movie_id}")
 
 
-def get_single_movie_cast(movie_id):
+def get_single_movie_cast(movie_id, how_many):
     # pobiera info o aktorach
     endpoint = f"https://api.themoviedb.org/3/movie/{movie_id}/credits"
     headers = {
         "Authorization": f"Bearer {api_token}"
     }
     response = requests.get(endpoint, headers=headers)
-    return response.json()["cast"]
+    return response.json()["cast"][:how_many]
 
 
 def get_single_movie_images(movie_id):
@@ -62,14 +61,15 @@ def get_single_movie_images(movie_id):
 
 def search(search_query):
     #wyszukuje filmy
-    base_url = "https://api.themoviedb.org/3/"   
+
     headers = {
         "Authorization": f"Bearer {api_token}"
     }
-    endpoint = f"{base_url}search/movie/?query={search_query}"
+    endpoint = f"https://api.themoviedb.org/3/search/movie/?query={search_query}"
 
     response = requests.get(endpoint, headers=headers)
     response = response.json()
+    print(response)
     return response['results']
 
 
