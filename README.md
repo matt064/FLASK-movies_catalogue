@@ -10,7 +10,7 @@ You can discover:
 
 You can mark a movie as favorite by tapping a star icon.
 
-<img src='static/screen_movies.png'>
+<img src='static/screen_movies.PNG'>
 
 ## Installation
 
